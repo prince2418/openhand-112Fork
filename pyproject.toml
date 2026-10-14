@@ -1,0 +1,3 @@
+
+[tool.vercel]
+entrypoint = "src.csafe.api.server:app"
