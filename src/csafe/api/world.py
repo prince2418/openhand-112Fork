@@ -144,7 +144,9 @@ class World:
         self.ROOT_HOTSPOTS = ROOT / "data/hotspots_geocoded.csv"
         self.watcher = Watch(self)
         # warm the slow parts (standby plan, forecast skill) so the first look at the Predict tab is instant
-        threading.Thread(target=self._warm, daemon=True).start()
+        # threading.Thread(target=self._warm, daemon=True).start()
+    if os.environ.get("WARM_CACHE", "0") == "1":
+    threading.Thread(target=self._warm, daemon=True).start()
 
     def _warm(self):
         try:
