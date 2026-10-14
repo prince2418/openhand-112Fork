@@ -28,7 +28,7 @@ from .world import DEMO_SPEED, KIND_LABEL, ROOT, World
 load_env(str(ROOT / ".env"))
 app = FastAPI(title="OpenHand 112", version="1.0")
 world = World()
-threading.Thread(target=world.flood.risk, daemon=True).start()   # 30+ monsoons through the water model: warm the cache
+# threading.Thread(target=world.flood.risk, daemon=True).start()   # 30+ monsoons through the water model: warm the cache
 baseline = FakeTriage(keyword_extract)
 try:
     # Each request is cut off after 15 s (Google rejects deadlines under 10 s); at most ~40 s in all, then give up.
@@ -111,7 +111,7 @@ def _gemini_self_test():
             print(f"[{ENGINE}] OK: {m['model']} answered in {_t.time() - t0:.1f} s. Backups if it fails: {', '.join(gemini.fallbacks)}", flush=True)
         except Exception as e:  # noqa: BLE001
             print(f"[{ENGINE}] NOT WORKING right now (backups tried: {', '.join(gemini.fallbacks)}). Reason: {str(e)[:600]}", flush=True)
-    if gemini is not None and os.environ.get("GEMINI_SELF_TEST", "1") != "0":
+    if gemini is not None and os.environ.get("GEMINI_SELF_TEST", "0") != "0":
         threading.Thread(target=run, daemon=True).start()
 
 
